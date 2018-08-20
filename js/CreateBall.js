@@ -3,17 +3,17 @@ export default class Ball {
     this.ballsContainer = document.querySelector('.balls-container');
     this.ballArray = ballArray;
     this.ballColors = ballColors;
-    this.availablePosition = []
+    this.availablePosition = [];
   }
 
   getAvailablePosition () {
-    this.availablePosition = []
+    this.availablePosition = [];
     for (let i = 0; i < this.ballArray.length; i++) {
       for (let j = 0; j < this.ballArray.length; j++) {
         if (!this.ballArray[i][j]) {
           this.availablePosition.push(
-            { x: i, y: j }
-          )
+            { x: j, y: i }
+          );
         }
       }
     }
@@ -33,7 +33,7 @@ export default class Ball {
     ball.setAttribute("class", classes.join(" "));
 
     this.ballsContainer.appendChild(ball);
-    this.ballArray[position.x][position.y] = elementColor;
+    this.ballArray[position.y][position.x] = elementColor;
 
     return this.ballArray;
   }
