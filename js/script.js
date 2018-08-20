@@ -1,11 +1,23 @@
-import Ball from './CreateBall'
+import Ball from './CreateBall.js'
 
-let ball = new Ball;
-let arr = [];
+let ballArray = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+let ballColors = ['green', 'red', 'yellow', 'violet', 'blue', 'orange', 'pink'];
+
+let ball = new Ball(ballArray, ballColors);
 
 document.querySelector('.action').addEventListener('click', () => {
   ball.createBall();
   ball.createBall();
-  arr = ball.createBall();
-  console.log(arr);
+  ballArray = ball.createBall();
+  console.log(ballArray);
 });

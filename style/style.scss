@@ -14,22 +14,23 @@ $ball-border-width: 1px;
 $game-bg: darken(#eee4da, 5%);
 
 .game-container {
-      outline: $grid-border-width solid $grid-border-color;
+  outline: $grid-border-width solid $grid-border-color;
   margin-top: 40px;
-    position: relative;
-    padding: $grid-spacing;
-    background: $game-bg;
-    cursor: default;
-
-    width: $field-width;
-    height: $field-width;
-    box-sizing: border-box;
+  position: relative;
+  padding: $grid-spacing;
+  background: $game-bg;
+  cursor: default;
+  width: $field-width;
+  height: $field-width;
+  box-sizing: border-box;
+  float: left;
 }
 
 .grid-container {
-    position: absolute;
-    z-index: 1;
-  }
+  position: absolute;
+  z-index: 1;
+}
+
 .balls-container {
   position: absolute;
   z-index: 2;

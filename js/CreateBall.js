@@ -1,18 +1,8 @@
 export default class Ball {
-  constructor () {
-    this.ballColors = ['green', 'red', 'yellow', 'violet', 'blue', 'orange', 'pink'];
+  constructor (ballArray, ballColors) {
     this.ballsContainer = document.querySelector('.balls-container');
-    this.ballArray = [
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ];
+    this.ballArray = ballArray;
+    this.ballColors = ballColors;
     this.availablePosition = []
   }
 
@@ -31,19 +21,19 @@ export default class Ball {
 
   getRandomPosition () {
     this.getAvailablePosition();
-    return this.availablePosition[Math.floor(Math.random() * this.availablePosition.length)]
+    return this.availablePosition[Math.floor(Math.random() * this.availablePosition.length)];
   }
 
   createBall () {
-    let ball = document.createElement("div")
-    let elementColor = this.ballColors[Math.floor(Math.random() * this.ballColors.length)]
+    let ball = document.createElement("div");
+    let elementColor = this.ballColors[Math.floor(Math.random() * this.ballColors.length)];
     let position = this.getRandomPosition();
-    let classes = ['ball', `ball-color-${elementColor}`, `ball-position-${position.x + 1}-${position.y + 1}`]
+    let classes = ['ball', `ball-color-${elementColor}`, `ball-position-${position.x + 1}-${position.y + 1}`];
 
     ball.setAttribute("class", classes.join(" "));
 
     this.ballsContainer.appendChild(ball);
-    this.ballArray[position.x][position.y] = elementColor
+    this.ballArray[position.x][position.y] = elementColor;
 
     return this.ballArray;
   }

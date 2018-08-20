@@ -9,6 +9,7 @@
   height: 600px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  float: left;
 }
 
 .grid-container {
