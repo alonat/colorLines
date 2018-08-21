@@ -4,7 +4,7 @@ export default class RemoveLine {
     this.tmpLine = [];
     this.tmpColor = '';
     this.ballsContainer = document.querySelector('.balls-container');
-    this.amountToDelete = 3;
+    this.amountToDelete = 5;
     this.ballArray = ballArray;
     this.HORIZONTAL_DIR = [0, 1, 0, -1];
     this.VERTICAL_DIR = [1, 0, -1, 0];
