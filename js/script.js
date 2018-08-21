@@ -2,13 +2,13 @@ import Ball from './CreateBall.js'
 import Line from './RemoveLine.js'
 
 let ballArray = [
-  ['blue', 0, 'green', 'green', 'green', 0, 0, 0, 0],
-  [0, 'red', 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 'red', 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 'red', 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 'red', 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 'red', 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 'yellow', 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
@@ -16,7 +16,6 @@ let ballArray = [
 let ballColors = ['green', 'red', 'yellow', 'violet', 'blue', 'orange', 'pink'];
 
 let ball = new Ball(ballArray, ballColors);
-let line = new Line(ballColors);
 
 document.querySelector('.action').addEventListener('click', () => {
   ball.createBall();
@@ -25,11 +24,32 @@ document.querySelector('.action').addEventListener('click', () => {
 });
 
 document.querySelector('.findLine').addEventListener('click', () => {
-  line.findLine(ballArray);
+  let line = new Line(ballArray, ballColors);
+  ballArray = line.findLine();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  ball.createBall();
-  ball.createBall();
-  ballArray = ball.createBall();
-})
+  ballArray = ball.createBallXY(0, 1, 0);
+  ballArray = ball.createBallXY(0, 2, 0);
+  ballArray = ball.createBallXY(0, 3, 0);
+
+  ballArray = ball.createBallXY(2, 1, 3);
+  ballArray = ball.createBallXY(3, 1, 3);
+  ballArray = ball.createBallXY(4, 1, 3);
+
+  ballArray = ball.createBallXY(6, 0, 2);
+  ballArray = ball.createBallXY(7, 1, 2);
+  ballArray = ball.createBallXY(8, 2, 2);
+
+  ballArray = ball.createBallXY(0, 6, 2);
+  ballArray = ball.createBallXY(1, 7, 2);
+  ballArray = ball.createBallXY(2, 8, 2);
+
+  ballArray = ball.createBallXY(0, 5, 4);
+  ballArray = ball.createBallXY(1, 4, 4);
+  ballArray = ball.createBallXY(2, 3, 4);
+
+  ballArray = ball.createBallXY(8, 6, 6);
+  ballArray = ball.createBallXY(7, 7, 6);
+  ballArray = ball.createBallXY(6, 8, 6);
+});

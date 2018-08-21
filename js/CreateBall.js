@@ -37,4 +37,17 @@ export default class Ball {
 
     return this.ballArray;
   }
+
+  createBallXY (x, y, color) {
+    let ball = document.createElement("div");
+    let elementColor = this.ballColors[color];
+    let classes = ['ball', `ball-color-${elementColor}`, `ball-position-${x + 1}-${y + 1}`];
+
+    ball.setAttribute("class", classes.join(" "));
+
+    this.ballsContainer.appendChild(ball);
+    this.ballArray[y][x] = elementColor;
+
+    return this.ballArray;
+  }
 }
