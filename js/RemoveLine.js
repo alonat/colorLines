@@ -20,27 +20,37 @@ export default class RemoveLine {
         }
       }
 
-      this.tmpLine.length >= this.amountToDelete && this.removeBalls(ballArray);
+      if (this.tmpLine.length >= this.amountToDelete) {
+        ballArray = this.removeBalls(ballArray);
+      }
     }
     return ballArray;
   }
 
   findVerticalLine (ballArray) {
+    let tmpColor = '';
     for (let j = 0; j < ballArray.length; j++) {
       this.tmpLine = [];
 
       for (let i = 0; i < ballArray.length; i++) {
-        this.tmpLine.push(ballArray[i][j]);
         if (ballArray[i][j] &&
-          (ballArray[i + 1] && ballArray[i][j] === ballArray[i + 1][j] ||
+          (ballArray[i + 1] && ballArray[i][j] === ballArray[i + 1][j] &&
             ballArray[i - 1] && ballArray[i][j] === ballArray[i - 1][j] )) {
-          this.tmpLine.push({i: i, j: j});
-          console.log(ballArray[i][j]);
-        } else if (this.tmpLine.length < this.amountToDelete) {
+
+          this.tmpLine.push({i: i, j: j });
+          tmpColor = ballArray[i][j];
+        } else if (this.tmpLine.length >= this.amountToDelete) {
+          ballArray = this.removeBalls(ballArray);
+          this.tmpLine = [];
+        } else if (tmpColor !== ballArray[i][j] || tmpColor !== '') {
+
+        } else {
           this.tmpLine = [];
         }
       }
-      this.tmpLine.length >= this.amountToDelete && this.removeBalls(ballArray);
+      if (this.tmpLine.length >= this.amountToDelete) {
+        ballArray = this.removeBalls(ballArray);
+      }
     }
     return ballArray;
   }
@@ -61,7 +71,9 @@ export default class RemoveLine {
           this.tmpLine = [];
         }
       }
-      this.tmpLine.length >= this.amountToDelete && this.removeBalls(ballArray);
+      if (this.tmpLine.length >= this.amountToDelete) {
+        ballArray = this.removeBalls(ballArray);
+      }
     }
 
     for (let k = ballArray.length - 2; k >= 0; k--) {
@@ -78,7 +90,9 @@ export default class RemoveLine {
           this.tmpLine = [];
         }
       }
-      this.tmpLine.length >= this.amountToDelete && this.removeBalls(ballArray);
+      if (this.tmpLine.length >= this.amountToDelete) {
+        ballArray = this.removeBalls(ballArray);
+      }
     }
 
     return ballArray;
@@ -100,7 +114,9 @@ export default class RemoveLine {
           this.tmpLine = []
         }
       }
-      this.tmpLine.length >= this.amountToDelete && this.removeBalls(ballArray);
+      if (this.tmpLine.length >= this.amountToDelete) {
+        ballArray = this.removeBalls(ballArray);
+      }
     }
 
     for (let k = 1; k < ballArray.length; k++) {
@@ -117,7 +133,9 @@ export default class RemoveLine {
           this.tmpLine = []
         }
       }
-      this.tmpLine.length >= this.amountToDelete && this.removeBalls(ballArray);
+      if (this.tmpLine.length >= this.amountToDelete) {
+        ballArray = this.removeBalls(ballArray);
+      }
     }
 
     return ballArray;
@@ -125,15 +143,17 @@ export default class RemoveLine {
 
   removeBalls (ballArray) {
     console.log(this.tmpLine);
-    this.tmpLine.map((el) => {
+    this.tmpLine.forEach((el) => {
       console.log(el);
       this.ballsContainer.childNodes.forEach(item => {
         if (item.classList.contains(`ball-position-${el.j + 1}-${el.i + 1}`)) {
           this.ballsContainer.removeChild(item);
         }
       });
-      return ballArray[el.i][el.j] = 0;
+      ballArray[el.i][el.j] = 0;
     });
+
+    return ballArray;
   }
 
   findLine(ballArray) {
