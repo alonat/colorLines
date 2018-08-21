@@ -1,12 +1,16 @@
 export default class FindPath {
   constructor (ballArray) {
     this.board = ballArray;
-    this.boardSize = 4; //this.board.length
+    this.boardSize = this.board.length;
     this.matrix = this.makeAdjacencyMatrix();
   }
 
   getNodeNumber (i, j) {
     return i * this.boardSize + j;
+  }
+
+  getNodeCoord (number) {
+    return [Number(Math.floor(number / this.boardSize)), number % this.boardSize]
   }
 
   makeAdjacencyMatrix () {
@@ -54,13 +58,49 @@ export default class FindPath {
     }
   }
 
-  getMinPath () {
-    this.removeAllFilledNodes();
-    let t = this.matrix;
-    let h = [];
-    for (let i = 0; i < 16; i++) {
-      h.push(t[i].join(','));
+  bfs (i, j) {
+    let queue = [];
+    let nodeNumber = this.getNodeNumber(i, j);
+    queue.push(nodeNumber);
+    let used = new Array(this.boardSize * this.boardSize).fill(false);
+    let path = new Array(this.boardSize * this.boardSize).fill(-1);
+    used[nodeNumber] = true;
+
+    while (queue.length > 0) {
+      let v = queue.shift();
+
+      for (let i = 0; i < this.matrix[v].length; i++) {
+        if (this.matrix[v][i] === 1) {
+          let to = i;
+
+          if (!used[to]) {
+            used[to] = true;
+            queue.push(to);
+            path[to] = v;
+          }
+        }
+      }
     }
-    console.log(h.join(`\n`));
+
+    return path;
+  }
+
+  getMinPath (start, end) {
+    this.removeAllFilledNodes();
+    let path = this.bfs(...start);
+    let from = this.getNodeNumber(...start);
+    let to = this.getNodeNumber(...end);
+    let pathEdges = [];
+
+    pathEdges.push(this.getNodeCoord(to));
+    if (path[to] === -1) {
+      return []
+    }
+    while (to !== from) {
+      to = path[to];
+      pathEdges.push(this.getNodeCoord(to));
+    }
+
+    return pathEdges;
   }
 }
