@@ -30,11 +30,14 @@ document.querySelector('.findLine').addEventListener('click', () => {
 });
 
 document.querySelector('.findPath').addEventListener('click', () => {
-  let path = new Path(ballArray);
+  let path = new Path(ballArray, [0, 0]);
 
-  let minPath = path.getMinPath([0, 0], [0,1]).join(' -> ');
+  let minPath = path.getMinPath([0,1]).join(' -> ');
   document.querySelector('.path').innerHTML = minPath.length > 0 ? minPath : 'No path'
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  ballArray = ball.createBallXY(0, 0, 3);
+  ballArray = ball.createBall();
+  ballArray = ball.createBall();
 });

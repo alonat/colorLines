@@ -1,8 +1,10 @@
 export default class FindPath {
-  constructor (ballArray) {
+  constructor (ballArray, start) {
     this.board = ballArray;
     this.boardSize = this.board.length;
     this.matrix = this.makeAdjacencyMatrix();
+    this.start = start;
+    this.fromNode = this.getNodeNumber(...this.start);
   }
 
   getNodeNumber (i, j) {
@@ -43,8 +45,10 @@ export default class FindPath {
     let nodeNumber = this.getNodeNumber(i, j);
 
     for (let i = 0; i < this.boardSize * this.boardSize; i++) {
-      this.matrix[nodeNumber][i] = 0;
-      this.matrix[i][nodeNumber] = 0;
+      if (nodeNumber !== this.fromNode) {
+        this.matrix[nodeNumber][i] = 0;
+        this.matrix[i][nodeNumber] = 0;
+      }
     }
   }
 
@@ -85,10 +89,9 @@ export default class FindPath {
     return path;
   }
 
-  getMinPath (start, end) {
+  getMinPath (end) {
     this.removeAllFilledNodes();
-    let path = this.bfs(...start);
-    let from = this.getNodeNumber(...start);
+    let path = this.bfs(...this.start);
     let to = this.getNodeNumber(...end);
     let pathEdges = [];
 
@@ -96,7 +99,7 @@ export default class FindPath {
     if (path[to] === -1) {
       return []
     }
-    while (to !== from) {
+    while (to !== this.fromNode) {
       to = path[to];
       pathEdges.push(this.getNodeCoord(to));
     }
