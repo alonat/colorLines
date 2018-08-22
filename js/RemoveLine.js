@@ -154,7 +154,6 @@ export default class RemoveLine {
   }
 
   removeBalls () {
-    console.log(this.tmpLine);
     if (this.tmpLine.length < this.amountToDelete) {
       this.tmpLine = [];
       this.tmpColor = '';
