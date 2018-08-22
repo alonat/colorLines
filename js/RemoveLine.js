@@ -18,11 +18,9 @@ export default class RemoveLine {
       this.ballArray[i + dir[0]] && this.ballArray[i][j] === this.ballArray[i + dir[0]][j + dir[1]] ||
       this.ballArray[i + dir[2]] && this.ballArray[i][j] === this.ballArray[i + dir[2]][j + dir[3]]
     );
-    // let checkColor = (this.tmpColor === '' || this.tmpColor === this.ballArray[i][j]);
 
     result &= Boolean(this.ballArray[i][j]);
     result &= checkNeighbor;
-    // result &= checkColor;
 
     return result;
   }
