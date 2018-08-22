@@ -28,14 +28,17 @@ export default class Ball {
     let ball = document.createElement("div");
     let elementColor = this.ballColors[Math.floor(Math.random() * this.ballColors.length)];
     let position = this.getRandomPosition();
-    let classes = ['ball', `ball-color-${elementColor}`, `ball-position-${position.x + 1}-${position.y + 1}`];
+    if (position) {
+      let classes = ['ball', `ball-color-${elementColor}`, `ball-position-${position.x + 1}-${position.y + 1}`];
 
-    ball.setAttribute("class", classes.join(" "));
+      ball.setAttribute("class", classes.join(" "));
 
-    this.ballsContainer.appendChild(ball);
-    this.ballArray[position.y][position.x] = elementColor;
+      this.ballsContainer.appendChild(ball);
+      this.ballArray[position.y][position.x] = elementColor;
 
-    return this.ballArray;
+      return this.ballArray;
+    }
+    return [];
   }
 
   createBallXY (x, y, color) {
