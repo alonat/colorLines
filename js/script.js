@@ -22,21 +22,6 @@ let pathStart = [];
 let pathEnd = [];
 let path = [];
 
-document.querySelector('.action').addEventListener('click', () => {
-  ball.createBall();
-  ball.createBall();
-  ballArray = ball.createBall();
-});
-
-document.querySelector('.findLine').addEventListener('click', () => {
-  let line = new Line(ballArray, ballColors);
-  ballArray = line.findLine();
-});
-
-document.querySelector('.findPath').addEventListener('click', () => {
-  getPath();
-});
-
 document.addEventListener('DOMContentLoaded', () => {
   ballArray = addThreeBalls();
 });
@@ -44,14 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelector('.game-container').addEventListener('click', async ({ target }) => {
   getPathCoord(target);
   getPath(ballArray);
-  ballArray = await buildPath();
+  ballArray = await makeStep();
 });
 
 function addThreeBalls () {
   for (let i = 0; i < 3; i++) {
     ballArray = ball.createBall();
   }
-  console.log(ballArray);
 
   return ballArray;
 }
@@ -73,15 +57,13 @@ function getPath (ballArray) {
     let currPath = new Path(ballArray, pathStart);
 
     path = currPath.getMinPath(pathEnd);
-    let minPath = path.join(' -> ');
-    document.querySelector('.path').innerHTML = minPath.length > 0 ? minPath : 'No path';
 
     pathStart = [];
     pathEnd = [];
   }
 }
 
-async function buildPath () {
+async function makeStep () {
   if (path.length > 0) {
     const delay = ms => new Promise(_ => setTimeout(_, ms));
     for (let i = 1; i < path.length; i++) {
@@ -90,6 +72,13 @@ async function buildPath () {
     }
 
     path = [];
+
+    let line = new Line(ballArray, ballColors);
+    let removedAmount;
+    [ballArray, removedAmount]  = line.findLine();
+    if (removedAmount < 1) {
+      ballArray = addThreeBalls();
+    }
   }
 
   return ballArray;

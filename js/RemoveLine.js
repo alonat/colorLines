@@ -10,6 +10,7 @@ export default class RemoveLine {
     this.VERTICAL_DIR = [1, 0, -1, 0];
     this.LOOP_DIAGONAL_DIR = [-1, 1, 1, -1];
     this.MAIN_DIAGONAL_DIR = [1, 1, -1, -1];
+    this.removedAmount = 0;
   }
 
   check (i, j, dir) {
@@ -169,6 +170,7 @@ export default class RemoveLine {
     });
     this.tmpLine = [];
     this.tmpColor = '';
+    this.removedAmount++;
   }
 
   findLine() {
@@ -177,6 +179,6 @@ export default class RemoveLine {
     this.findMainDiagonalLine();
     this.findLoopDiagonalLine();
 
-    return this.ballArray;
+    return [this.ballArray, this.removedAmount];
   }
 }
