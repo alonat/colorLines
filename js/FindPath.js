@@ -104,6 +104,6 @@ export default class FindPath {
       pathEdges.push(this.getNodeCoord(to));
     }
 
-    return pathEdges;
+    return pathEdges.reverse();
   }
 }
