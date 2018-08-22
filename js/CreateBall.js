@@ -41,15 +41,15 @@ export default class Ball {
     return [];
   }
 
-  createBallXY (x, y, color) {
-    let ball = document.createElement("div");
-    let elementColor = this.ballColors[color];
-    let classes = ['ball', `ball-color-${elementColor}`, `ball-position-${x + 1}-${y + 1}`];
+  moveBallXY (oldCoord, newCoord) {
+    let oldClass = `ball-position-${oldCoord[1] + 1}-${oldCoord[0] + 1}`;
+    let newClass = `ball-position-${newCoord[1] + 1}-${newCoord[0] + 1}`;
 
-    ball.setAttribute("class", classes.join(" "));
+    document.querySelector(`.${oldClass}`).classList.add(newClass);
+    document.querySelector(`.${newClass}`).classList.remove(oldClass);
 
-    this.ballsContainer.appendChild(ball);
-    this.ballArray[y][x] = elementColor;
+    this.ballArray[newCoord[0]][newCoord[1]] = this.ballArray[oldCoord[0]][oldCoord[1]];
+    this.ballArray[oldCoord[0]][oldCoord[1]] = 0;
 
     return this.ballArray;
   }
