@@ -1,5 +1,5 @@
 export default class RemoveLine {
-  constructor (ballArray, ballColors) {
+  constructor(ballArray, ballColors) {
     this.ballColors = ballColors;
     this.tmpLine = [];
     this.tmpColor = '';
@@ -13,11 +13,16 @@ export default class RemoveLine {
     this.removedAmount = 0;
   }
 
-  check (i, j, dir) {
+  check(i, j, dir) {
     let result = true;
-    let checkNeighbor = (
-      this.ballArray[i + dir[0]] && this.ballArray[i][j] === this.ballArray[i + dir[0]][j + dir[1]] ||
-      this.ballArray[i + dir[2]] && this.ballArray[i][j] === this.ballArray[i + dir[2]][j + dir[3]]
+    const checkNeighbor = (
+      (
+        this.ballArray[i + dir[0]]
+        && this.ballArray[i][j] === this.ballArray[i + dir[0]][j + dir[1]]
+      ) || (
+        this.ballArray[i + dir[2]]
+        && this.ballArray[i][j] === this.ballArray[i + dir[2]][j + dir[3]]
+      )
     );
 
     result &= Boolean(this.ballArray[i][j]);
@@ -26,17 +31,17 @@ export default class RemoveLine {
     return result;
   }
 
-  findHorizontalLine () {
-    for (let i = 0; i < this.ballArray.length; i++) {
+  findHorizontalLine() {
+    for (let i = 0; i < this.ballArray.length; i += 1) {
       this.tmpLine = [];
       this.tmpColor = '';
 
-      for (let j = 0; j < this.ballArray.length; j++) {
+      for (let j = 0; j < this.ballArray.length; j += 1) {
         if (this.check(i, j, this.HORIZONTAL_DIR)) {
           if (this.tmpColor !== '' && this.tmpColor !== this.ballArray[i][j]) {
             this.removeBalls();
           }
-          this.tmpLine.push({i: i, j: j});
+          this.tmpLine.push({ i, j });
           this.tmpColor = this.ballArray[i][j];
         } else {
           this.removeBalls();
@@ -47,16 +52,16 @@ export default class RemoveLine {
     }
   }
 
-  findVerticalLine () {
-    for (let j = 0; j < this.ballArray.length; j++) {
+  findVerticalLine() {
+    for (let j = 0; j < this.ballArray.length; j += 1) {
       this.tmpLine = [];
       this.tmpColor = '';
-      for (let i = 0; i < this.ballArray.length; i++) {
+      for (let i = 0; i < this.ballArray.length; i += 1) {
         if (this.check(i, j, this.VERTICAL_DIR)) {
           if (this.tmpColor !== '' && this.tmpColor !== this.ballArray[i][j]) {
             this.removeBalls();
           }
-          this.tmpLine.push({i: i, j: j });
+          this.tmpLine.push({ i, j });
           this.tmpColor = this.ballArray[i][j];
         } else {
           this.removeBalls();
@@ -67,19 +72,19 @@ export default class RemoveLine {
     }
   }
 
-  findLoopDiagonalLine () {
+  findLoopDiagonalLine() {
     let i = 0;
-    for (let k = 0; k < this.ballArray.length; k++) {
+    for (let k = 0; k < this.ballArray.length; k += 1) {
       this.tmpLine = [];
       this.tmpColor = '';
-      for (let j = 0; j <= k; j++) {
+      for (let j = 0; j <= k; j += 1) {
         i = k - j;
 
         if (this.check(i, j, this.LOOP_DIAGONAL_DIR)) {
           if (this.tmpColor !== '' && this.tmpColor !== this.ballArray[i][j]) {
             this.removeBalls();
           }
-          this.tmpLine.push({i: i, j: j});
+          this.tmpLine.push({ i, j });
           this.tmpColor = this.ballArray[i][j];
         } else {
           this.removeBalls();
@@ -89,19 +94,26 @@ export default class RemoveLine {
       this.removeBalls();
     }
 
-    for (let k = this.ballArray.length - 2; k >= 0; k--) {
+    for (let k = this.ballArray.length - 2; k >= 0; k -= 1) {
       this.tmpLine = [];
       this.tmpColor = '';
-      for (let j = 0; j <= k; j ++) {
+      for (let j = 0; j <= k; j += 1) {
         i = k - j;
+        const indexI = this.ballArray.length - j - 1;
+        const indexJ = this.ballArray.length - i - 1;
 
-        if (this.check(this.ballArray.length - j - 1, this.ballArray.length - i - 1, this.LOOP_DIAGONAL_DIR)) {
-          if (this.tmpColor !== '' &&
-              this.tmpColor !== this.ballArray[this.ballArray.length - j - 1][this.ballArray.length - i - 1]) {
-            this.removeBalls();
-          }
-          this.tmpLine.push({i: this.ballArray.length - j - 1, j: this.ballArray.length - i - 1});
-          this.tmpColor = this.ballArray[this.ballArray.length - j - 1][this.ballArray.length - i - 1];
+        if (this.check(indexJ, indexI, this.LOOP_DIAGONAL_DIR)) {
+          if (
+            this.tmpColor !== ''
+            && this.tmpColor !== this.ballArray[indexJ][indexI]
+          ) this.removeBalls();
+
+          this.tmpLine.push({
+            i: indexJ,
+            j: indexI,
+          });
+
+          this.tmpColor = this.ballArray[indexJ][indexI];
         } else {
           this.removeBalls();
         }
@@ -111,19 +123,19 @@ export default class RemoveLine {
     }
   }
 
-  findMainDiagonalLine () {
+  findMainDiagonalLine() {
     let i = 0;
-    for (let k = this.ballArray.length - 1; k >= 0; k--) {
+    for (let k = this.ballArray.length - 1; k >= 0; k -= 1) {
       this.tmpLine = [];
       this.tmpColor = '';
-      for (let j = k; j <= this.ballArray.length - 1; j++) {
+      for (let j = k; j <= this.ballArray.length - 1; j += 1) {
         i = j - k;
 
         if (this.check(i, j, this.MAIN_DIAGONAL_DIR)) {
           if (this.tmpColor !== '' && this.tmpColor !== this.ballArray[i][j]) {
             this.removeBalls();
           }
-          this.tmpLine.push({i: i, j: j});
+          this.tmpLine.push({ i, j });
           this.tmpColor = this.ballArray[i][j];
         } else {
           this.removeBalls();
@@ -133,35 +145,35 @@ export default class RemoveLine {
       this.removeBalls();
     }
 
-    for (let k = 1; k < this.ballArray.length; k++) {
+    for (let k = 1; k < this.ballArray.length; k += 1) {
       this.tmpLine = [];
       this.tmpColor = '';
-      for (let j = 0; j <= this.ballArray.length - 1 - k; j++) {
+      for (let j = 0; j <= this.ballArray.length - 1 - k; j += 1) {
         i = k + j;
 
         if (this.check(i, j, this.MAIN_DIAGONAL_DIR)) {
           if (this.tmpColor !== '' && this.tmpColor !== this.ballArray[i][j]) {
             this.removeBalls();
           }
-          this.tmpLine.push({i: i, j: j});
+          this.tmpLine.push({ i, j });
           this.tmpColor = this.ballArray[i][j];
         } else {
           this.removeBalls();
         }
-    }
+      }
 
       this.removeBalls();
     }
   }
 
-  removeBalls () {
+  removeBalls() {
     if (this.tmpLine.length < this.amountToDelete) {
       this.tmpLine = [];
       this.tmpColor = '';
       return;
     }
     this.tmpLine.forEach((el) => {
-      this.ballsContainer.childNodes.forEach(item => {
+      this.ballsContainer.childNodes.forEach((item) => {
         if (item.classList.contains(`ball-position-${el.j + 1}-${el.i + 1}`)) {
           this.ballsContainer.removeChild(item);
         }
@@ -170,7 +182,7 @@ export default class RemoveLine {
     });
     this.tmpLine = [];
     this.tmpColor = '';
-    this.removedAmount++;
+    this.removedAmount += 1;
   }
 
   findLine() {

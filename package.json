@@ -1,0 +1,24 @@
+{
+  "name": "colorlines",
+  "version": "1.0.0",
+  "description": "Simple js game",
+  "main": "js/index.js",
+  "scripts": {
+    "lint": "eslint ./js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alonat/colorLines.git"
+  },
+  "author": "Alona Khaniukova",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alonat/colorLines/issues"
+  },
+  "homepage": "https://github.com/alonat/colorLines#readme",
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}
