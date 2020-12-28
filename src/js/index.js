@@ -2,6 +2,8 @@ import Ball from './CreateBall.js';
 import Line from './RemoveLine.js';
 import Path from './FindPath.js';
 
+import '../style/index.scss';
+
 let ballArray = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,16 +20,24 @@ const ballColors = ['green', 'red', 'yellow', 'violet', 'blue', 'orange', 'pink'
 
 const ball = new Ball(ballArray, ballColors);
 
+let nextBalls = ball.createNBalls(3);
+
 let pathStart = [];
 let pathEnd = [];
 let path = [];
 
 function addThreeBalls() {
-  for (let i = 0; i < 3; i += 1) {
-    ballArray = ball.createBall();
-  }
+  ballArray = ball.insertNBalls(nextBalls);
+  nextBalls = ball.createNBalls(3);
 
   return ballArray;
+}
+
+function insertNextStepBall() {
+  document.querySelector('.next-step').innerHTML = '';
+  nextBalls.forEach((ballColor) => {
+    document.querySelector('.next-step').append(ball.createBallElement(ballColor));
+  })
 }
 
 function getPathCoord(target) {
@@ -69,6 +79,7 @@ async function makeStep() {
     [ballArray, removedAmount] = line.findLine();
     if (removedAmount < 1) {
       ballArray = addThreeBalls();
+      insertNextStepBall()
     }
   }
 
@@ -77,6 +88,7 @@ async function makeStep() {
 
 document.addEventListener('DOMContentLoaded', () => {
   ballArray = addThreeBalls();
+  insertNextStepBall();
 });
 
 document.querySelector('.game-container').addEventListener('click', async ({ target }) => {

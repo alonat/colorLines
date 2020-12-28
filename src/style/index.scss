@@ -1,0 +1,160 @@
+$grid-row-cells: 9;
+
+:root {
+  --field-width: 600px;
+  --grid-spacing: 2px;
+  --grid-row-cells: 9;
+  --grid-border-color: #af9681;
+  --grid-border-width: 4px;
+  --ball-size: calc((var(--field-width) - var(--grid-spacing) * (var(--grid-row-cells) + 1)) / var(--grid-row-cells));
+  --text-color: #776E65;
+  --bright-text-color: #f9f6f2;
+
+  --ball-color: #f0ebe6;
+  --ball-gold-color: #edc22e;
+  --ball-gold-glow-color: #f3d774;
+  --ball-border-width: 1px;
+  --game-bg: #e6d7c9;
+
+  --font-family: 'Open Sans', Arial, sans-serif;
+}
+
+@media screen and (max-width: 640px) {
+  :root {
+    --field-width: 400px;
+  }
+}
+
+.game-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+
+  & * {
+    box-sizing: border-box;
+  }
+}
+
+.game-container {
+  outline: var(--grid-border-width) solid var(--grid-border-color);
+  position: relative;
+  padding: var(--grid-spacing);
+  background: var(--game-bg);
+  cursor: default;
+  width: var(--field-width);
+  height: var(--field-width);
+}
+
+.grid-container {
+  position: absolute;
+  z-index: 1;
+}
+
+.balls-container {
+  position: absolute;
+  z-index: 2;
+}
+
+  .grid-row {
+    margin-bottom: var(--grid-spacing);
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .grid-cell {
+    width: var(--ball-size);
+    height: var(--ball-size);
+    float: left;
+    margin-right: var(--grid-spacing);
+    background: var(--ball-color);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+@mixin ball-mixin {
+  .ball {
+    width: calc(var(--ball-size) - 10px);
+    height: calc(var(--ball-size) - 10px);
+    border-radius: 50%;
+
+    @for $x from 1 through $grid-row-cells {
+      @for $y from 1 through $grid-row-cells {
+        &.ball-position-#{$x}-#{$y} {
+          position: absolute;
+          left: calc((#{var(--ball-size)} + #{var(--grid-spacing)}) * (#{$x} - 1) + 5px);
+          top: calc((#{var(--ball-size)} + #{var(--grid-spacing)}) * (#{$y} - 1) + 5px);
+        }
+      }
+    }
+  }
+}
+
+@include ball-mixin();
+
+$colorsList: green, violet, red, yellow, blue, orange, pink;
+
+@each $color in $colorsList {
+  .ball-color-#{$color} {
+    background: $color;
+  }
+}
+
+
+.game-helper {
+  width: var(--field-width);
+  background: var(--game-bg);
+  padding: 10px;
+  outline: var(--grid-border-width) solid var(--grid-border-color);
+  display: flex;
+
+  @media screen and (max-width: 640px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.helper-text {
+  font: 400 14px/1.5 var(--font-family);
+  margin: 0;
+  color: #7C6B5D;
+}
+
+.helper-title {
+  font: 400 16px/1.5 var(--font-family);
+  color: #544940;
+
+  @media screen and (max-width: 640px) {
+    margin: 5px 0;
+  }
+}
+
+.next-step-wrapper {
+  margin-left: 20px;
+  flex: 1;
+
+  @media screen and (max-width: 640px) {
+    margin: 0 0 10px;
+  }
+}
+
+.next-step {
+  display: flex;
+
+  .ball {
+    width: 20px;
+    height: 20px;
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}

@@ -22,21 +22,34 @@ export default class Ball {
     return this.availablePosition[Math.floor(Math.random() * this.availablePosition.length)];
   }
 
-  createBall() {
+  createNBalls(n) {
+    return Array(n).fill('').map(() => {
+      return this.ballColors[Math.floor(Math.random() * this.ballColors.length)]
+    });
+  }
+
+  createBallElement(ballColor, position) {
     const ball = document.createElement('div');
-    const elementColor = this.ballColors[Math.floor(Math.random() * this.ballColors.length)];
-    const position = this.getRandomPosition();
-    if (position) {
-      const classes = ['ball', `ball-color-${elementColor}`, `ball-position-${position.x + 1}-${position.y + 1}`];
+    const classes = ['ball', `ball-color-${ballColor}`];
+    if (position) classes.push(`ball-position-${position.x + 1}-${position.y + 1}`)
 
-      ball.setAttribute('class', classes.join(' '));
+    ball.setAttribute('class', classes.join(' '));
 
-      this.ballsContainer.appendChild(ball);
-      this.ballArray[position.y][position.x] = elementColor;
+    return ball;
+  }
 
-      return this.ballArray;
-    }
-    return [];
+  insertNBalls(ballsToInsert) {
+    ballsToInsert.forEach((ballColor) => {
+      const position = this.getRandomPosition();
+      if (position) {
+        const ball = this.createBallElement(ballColor, position);
+
+        this.ballsContainer.appendChild(ball);
+        this.ballArray[position.y][position.x] = ballColor;
+      }
+    });
+    console.log(this.ballArray);
+    return this.ballArray;
   }
 
   moveBallXY(oldCoord, newCoord) {
